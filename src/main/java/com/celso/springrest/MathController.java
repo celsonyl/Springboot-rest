@@ -36,6 +36,24 @@ public class MathController {
         return convertToDouble(numberOne) * convertToDouble(numberTwo);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/raizQuadrada/{numberOne}/{numberTwo}")
+    public Double raizQuadrada(@PathVariable(value = "numberOne") String numberOne, @PathVariable(value = "numberTwo") String numberTwo) {
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+            throw new UnsupportedMathOperationException("Defina um valor numerico!");
+        }
+
+        return Math.pow(convertToDouble(numberOne), convertToDouble(numberTwo));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/media/{numberOne}/{numberTwo}")
+    public Double media(@PathVariable(value = "numberOne") String numberOne, @PathVariable(value = "numberTwo") String numberTwo) {
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+            throw new UnsupportedMathOperationException("Defina um valor numerico!");
+        }
+
+        return (convertToDouble(numberOne) + convertToDouble(numberTwo)) / 2;
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/divisao/{numberOne}/{numberTwo}")
     public Double divisao(@PathVariable(value = "numberOne") String numberOne, @PathVariable(value = "numberTwo") String numberTwo) {
         if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
