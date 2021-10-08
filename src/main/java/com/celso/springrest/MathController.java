@@ -18,6 +18,35 @@ public class MathController {
         return convertToDouble(numberOne) + convertToDouble(numberTwo);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/subTracao/{numberOne}/{numberTwo}")
+    public Double subTracao(@PathVariable(value = "numberOne") String numberOne, @PathVariable(value = "numberTwo") String numberTwo) {
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+            throw new UnsupportedMathOperationException("Defina um valor numerico!");
+        }
+
+        return convertToDouble(numberOne) - convertToDouble(numberTwo);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/multiplicacao/{numberOne}/{numberTwo}")
+    public Double multiplicacao(@PathVariable(value = "numberOne") String numberOne, @PathVariable(value = "numberTwo") String numberTwo) {
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+            throw new UnsupportedMathOperationException("Defina um valor numerico!");
+        }
+
+        return convertToDouble(numberOne) * convertToDouble(numberTwo);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/divisao/{numberOne}/{numberTwo}")
+    public Double divisao(@PathVariable(value = "numberOne") String numberOne, @PathVariable(value = "numberTwo") String numberTwo) {
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+            throw new UnsupportedMathOperationException("Defina um valor numerico!");
+        } else if (convertToDouble(numberTwo) == 0) {
+            throw new UnsupportedMathOperationException("Não é possivel dividir por 0");
+        }
+
+        return convertToDouble(numberOne) / convertToDouble(numberTwo);
+    }
+
     private Double convertToDouble(String number) {
         return Double.parseDouble(number);
     }
