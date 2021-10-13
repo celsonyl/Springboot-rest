@@ -1,4 +1,4 @@
-package com.celso.springrest.exceptions;
+package com.celso.springrest.exceptions.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -42,4 +42,3 @@ public class ExceptionsResponse implements Serializable {
         this.detail = detail;
     }
 }
-

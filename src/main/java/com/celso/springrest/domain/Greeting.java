@@ -1,4 +1,4 @@
-package com.celso.springrest;
+package com.celso.springrest.domain;
 
 public class Greeting {
 

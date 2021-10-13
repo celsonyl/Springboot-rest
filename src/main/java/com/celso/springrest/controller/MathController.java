@@ -1,4 +1,4 @@
-package com.celso.springrest;
+package com.celso.springrest.controller;
 
 import com.celso.springrest.exceptions.UnsupportedMathOperationException;
 import org.springframework.web.bind.annotation.PathVariable;

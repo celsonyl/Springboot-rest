@@ -1,6 +1,6 @@
 package com.celso.springrest.exceptions.handler;
 
-import com.celso.springrest.exceptions.ExceptionsResponse;
+import com.celso.springrest.exceptions.model.ExceptionsResponse;
 import com.celso.springrest.exceptions.UnsupportedMathOperationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
