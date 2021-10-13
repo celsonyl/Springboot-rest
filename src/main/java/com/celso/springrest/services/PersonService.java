@@ -12,6 +12,10 @@ public class PersonService {
 
     private final AtomicLong counter = new AtomicLong();
 
+    public Person createPerson(Person obj) {
+        return obj;
+    }
+
     public Person findById(String id) {
         Person obj = new Person();
         obj.setId(counter.incrementAndGet());
