@@ -33,4 +33,16 @@ public class PersonController {
         var person = personService.createPerson(obj);
         return ResponseEntity.ok().body(person);
     }
+
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Person> updatePerson(@PathVariable String id, @RequestBody Person obj) {
+        var person = personService.updatePerson(obj, id);
+        return ResponseEntity.ok().body(person);
+    }
+
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> deletePerson(@PathVariable String id) {
+        personService.deletePerson(id);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -13,7 +13,16 @@ public class PersonService {
     private final AtomicLong counter = new AtomicLong();
 
     public Person createPerson(Person obj) {
+        obj.setId(counter.incrementAndGet());
         return obj;
+    }
+
+    public Person updatePerson(Person obj, String id) {
+        obj.setId(Long.parseLong(id));
+        return obj;
+    }
+
+    public void deletePerson(String id) {
     }
 
     public Person findById(String id) {
