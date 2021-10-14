@@ -1,5 +1,6 @@
 package com.celso.springrest.exceptions.handler;
 
+import com.celso.springrest.exceptions.ObjectNotFound;
 import com.celso.springrest.exceptions.model.ExceptionsResponse;
 import com.celso.springrest.exceptions.UnsupportedMathOperationException;
 import org.springframework.http.HttpStatus;
@@ -26,5 +27,11 @@ public class CustomizedResponseEntity extends ResponseEntityExceptionHandler {
     public final ResponseEntity<ExceptionsResponse> handleBadRequest(Exception ex, WebRequest request) {
         ExceptionsResponse exceptionsResponse = new ExceptionsResponse(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(exceptionsResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ObjectNotFound.class)
+    public final ResponseEntity<ExceptionsResponse> objectNotFound(Exception ex, WebRequest request) {
+        ExceptionsResponse exceptionsResponse = new ExceptionsResponse(new Date(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(exceptionsResponse, HttpStatus.NOT_FOUND);
     }
 }

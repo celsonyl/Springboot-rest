@@ -1,58 +1,52 @@
 package com.celso.springrest.services;
 
 import com.celso.springrest.controller.model.Person;
+import com.celso.springrest.exceptions.ObjectNotFound;
+import com.celso.springrest.repository.PersonRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class PersonService {
 
-    private final AtomicLong counter = new AtomicLong();
-
-    public Person createPerson(Person obj) {
-        obj.setId(counter.incrementAndGet());
-        return obj;
-    }
-
-    public Person updatePerson(Person obj, String id) {
-        obj.setId(Long.parseLong(id));
-        return obj;
-    }
-
-    public void deletePerson(String id) {
-    }
+    @Autowired
+    private PersonRepository personRepository;
 
     public Person findById(String id) {
-        Person obj = new Person();
-        obj.setId(counter.incrementAndGet());
-        obj.setFirstName("Celso");
-        obj.setLastName("Bertolotto");
-        obj.setAddress("Octavio casemiro");
-        obj.setGender("Masculino");
+        var obj = personRepository.findById(Long.parseLong(id));
+        if (obj.isEmpty()) {
+            throw new ObjectNotFound("Usuario não existe!");
+        }
 
-        return obj;
+        return obj.get();
     }
 
     public List<Person> findAll() {
-        List<Person> personList = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
-            Person person = mockPerson(i);
-            personList.add(person);
-        }
-        return personList;
+        return personRepository.findAll();
     }
 
-    private Person mockPerson(int i) {
-        Person obj = new Person();
-        obj.setId(counter.incrementAndGet());
-        obj.setFirstName("Celso " + i);
-        obj.setLastName("Bertolotto " + i);
-        obj.setAddress("Octavio casemiro " + i);
-        obj.setGender("Masculino " + i);
-
-        return obj;
+    public Person createPerson(Person obj) {
+        return personRepository.save(obj);
     }
+
+    public void updatePerson(Person obj, String id) {
+        var person = findById(id);
+        updatePerson(person, obj);
+    }
+
+    public void deletePerson(String id) {
+        var person = findById(id);
+        personRepository.deleteById(person.getId());
+    }
+
+    private void updatePerson(Person person, Person obj) {
+        person.setFirstName(obj.getFirstName());
+        person.setLastName(obj.getLastName());
+        person.setGender(obj.getGender());
+        person.setAddress(obj.getAddress());
+        personRepository.save(person);
+    }
+
 }
