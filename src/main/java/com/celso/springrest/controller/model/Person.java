@@ -1,14 +1,30 @@
 package com.celso.springrest.controller.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
 public class Person implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank
     private String firstName;
+
+    @NotBlank
     private String lastName;
+
+    @NotBlank
     private String address;
+
+    @NotBlank
     private String gender;
 
     public Person() {
