@@ -1,12 +1,16 @@
 package com.celso.springrest.services;
 
-import com.celso.springrest.controller.model.Person;
+import com.celso.springrest.controller.model.PersonRequest;
+import com.celso.springrest.controller.model.PersonResponse;
 import com.celso.springrest.exceptions.ObjectNotFound;
-import com.celso.springrest.repository.PersonRepository;
+import com.celso.springrest.gateway.model.PersonDatabase;
+import com.celso.springrest.gateway.repository.PersonRepository;
+import com.celso.springrest.translator.PersonMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PersonService {
@@ -14,39 +18,44 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
-    public Person findById(String id) {
+    public PersonResponse findById(String id) {
         var obj = personRepository.findById(Long.parseLong(id));
         if (obj.isEmpty()) {
             throw new ObjectNotFound("Usuario não existe!");
         }
 
-        return obj.get();
+        return new PersonMapperImpl().personDatabaseToResponse(obj.get());
     }
 
-    public List<Person> findAll() {
-        return personRepository.findAll();
+    public List<PersonResponse> findAll() {
+        var listPerson = personRepository.findAll();
+
+        return listPerson.stream()
+                .map(new PersonMapperImpl()::personDatabaseToResponse)
+                .collect(Collectors.toList());
     }
 
-    public Person createPerson(Person obj) {
-        return personRepository.save(obj);
+    public PersonResponse createPerson(PersonRequest obj) {
+        var personSaved = personRepository.save(new PersonMapperImpl().personRequestToDatabase(obj));
+        return new PersonMapperImpl().personDatabaseToResponse(personSaved);
     }
 
-    public void updatePerson(Person obj, String id) {
+    public void updatePerson(PersonRequest obj, String id) {
+        var personMapper = new PersonMapperImpl();
         var person = findById(id);
-        updatePerson(person, obj);
+        updatePerson(personMapper.personResponseToDatabase(person), personMapper.personRequestToDatabase(obj));
     }
 
     public void deletePerson(String id) {
         var person = findById(id);
-        personRepository.deleteById(person.getId());
+        personRepository.deleteById(new PersonMapperImpl().personResponseToDatabase(person).getId());
     }
 
-    private void updatePerson(Person person, Person obj) {
+    private void updatePerson(PersonDatabase person, PersonDatabase obj) {
         person.setFirstName(obj.getFirstName());
         person.setLastName(obj.getLastName());
         person.setGender(obj.getGender());
         person.setAddress(obj.getAddress());
         personRepository.save(person);
     }
-
 }
