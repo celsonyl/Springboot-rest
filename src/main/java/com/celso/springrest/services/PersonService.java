@@ -1,7 +1,9 @@
 package com.celso.springrest.services;
 
 import com.celso.springrest.controller.model.PersonRequest;
+import com.celso.springrest.controller.model.PersonRequestV2;
 import com.celso.springrest.controller.model.PersonResponse;
+import com.celso.springrest.controller.model.PersonResponseV2;
 import com.celso.springrest.exceptions.ObjectNotFound;
 import com.celso.springrest.gateway.model.PersonDatabase;
 import com.celso.springrest.gateway.repository.PersonRepository;
@@ -38,6 +40,11 @@ public class PersonService {
     public PersonResponse createPerson(PersonRequest obj) {
         var personSaved = personRepository.save(new PersonMapperImpl().personRequestToDatabase(obj));
         return new PersonMapperImpl().personDatabaseToResponse(personSaved);
+    }
+
+    public PersonResponseV2 createPersonV2(PersonRequestV2 obj) {
+        var personSaved = personRepository.save(new PersonMapperImpl().personRequestV2ToDatabase(obj));
+        return new PersonMapperImpl().personDatabaseToResponseV2(personSaved);
     }
 
     public void updatePerson(PersonRequest obj, String id) {

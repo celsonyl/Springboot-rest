@@ -1,6 +1,7 @@
 package com.celso.springrest.controller;
 
 import com.celso.springrest.controller.model.PersonRequest;
+import com.celso.springrest.controller.model.PersonRequestV2;
 import com.celso.springrest.controller.model.PersonResponse;
 import com.celso.springrest.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,12 @@ public class PersonController {
     @PostMapping
     public ResponseEntity<Void> createPerson(@RequestBody PersonRequest obj, UriComponentsBuilder uriComponentsBuilder) {
         var person = personService.createPerson(obj);
+        return ResponseEntity.created(uriComponentsBuilder.path("person/{id}").buildAndExpand(person.getId()).toUri()).build();
+    }
+
+    @PostMapping("/v2")
+    public ResponseEntity<Void> createPersonV2(@RequestBody PersonRequestV2 obj, UriComponentsBuilder uriComponentsBuilder) {
+        var person = personService.createPersonV2(obj);
         return ResponseEntity.created(uriComponentsBuilder.path("person/{id}").buildAndExpand(person.getId()).toUri()).build();
     }
 

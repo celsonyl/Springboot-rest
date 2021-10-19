@@ -1,22 +1,36 @@
 package com.celso.springrest.controller.model;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class PersonRequest implements Serializable {
+public class PersonResponseV2 {
 
+    private Long id;
     private String firstName;
     private String lastName;
     private String address;
     private String gender;
 
-    public PersonRequest() {
+    @JsonFormat(pattern = "dd/MM/yyyy", timezone = "GMT-3")
+    private String birthDay;
+
+    public PersonResponseV2() {
     }
 
-    public PersonRequest(String firstName, String lastName, String address, String gender) {
+    public PersonResponseV2(Long id, String firstName, String lastName, String address, String gender, String birthDay) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.gender = gender;
+        this.birthDay = birthDay;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -49,5 +63,13 @@ public class PersonRequest implements Serializable {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(String birthDay) {
+        this.birthDay = birthDay;
     }
 }

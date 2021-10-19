@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity(name = "person")
@@ -18,16 +19,18 @@ public class PersonDatabase implements Serializable {
     private String lastName;
     private String address;
     private String gender;
+    private Date birthDay;
 
     public PersonDatabase() {
     }
 
-    public PersonDatabase(Long id, String firstName, String lastName, String address, String gender) {
+    public PersonDatabase(Long id, String firstName, String lastName, String address, String gender, Date birthDay) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.gender = gender;
+        this.birthDay = birthDay;
     }
 
     public Long getId() {
@@ -68,6 +71,14 @@ public class PersonDatabase implements Serializable {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
     }
 
     @Override
