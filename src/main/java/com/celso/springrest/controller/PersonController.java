@@ -18,30 +18,30 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
-    @GetMapping(value = "/{id}", produces = {"application/json", "application/xml"})
+    @GetMapping(value = "/{id}", produces = {"application/json", "application/xml", "application/x-yaml"})
     public ResponseEntity<PersonResponse> findById(@PathVariable String id) {
         var obj = personService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
-    @GetMapping(produces = {"application/json", "application/xml"})
+    @GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
     public ResponseEntity<List<PersonResponse>> findAll() {
         return ResponseEntity.ok().body(personService.findAll());
     }
 
-    @PostMapping(produces = {"application/json", "application/xml"}, consumes = {"application/json", "application/xml"})
+    @PostMapping(produces = {"application/json", "application/xml"}, consumes = {"application/json", "application/xml", "application/x-yaml"})
     public ResponseEntity<Void> createPerson(@RequestBody PersonRequest obj, UriComponentsBuilder uriComponentsBuilder) {
         var person = personService.createPerson(obj);
         return ResponseEntity.created(uriComponentsBuilder.path("person/{id}").buildAndExpand(person.getId()).toUri()).build();
     }
 
-    @PostMapping(value = "/v2", produces = {"application/json", "application/xml"}, consumes = {"application/json", "application/xml"})
+    @PostMapping(value = "/v2", produces = {"application/json", "application/xml"}, consumes = {"application/json", "application/xml", "application/x-yaml"})
     public ResponseEntity<Void> createPersonV2(@RequestBody PersonRequestV2 obj, UriComponentsBuilder uriComponentsBuilder) {
         var person = personService.createPersonV2(obj);
         return ResponseEntity.created(uriComponentsBuilder.path("person/{id}").buildAndExpand(person.getId()).toUri()).build();
     }
 
-    @PutMapping(value = "/{id}", produces = {"application/json", "application/xml"}, consumes = {"application/json", "application/xml"})
+    @PutMapping(value = "/{id}", produces = {"application/json", "application/xml"}, consumes = {"application/json", "application/xml", "application/x-yaml"})
     public ResponseEntity<Void> updatePerson(@PathVariable String id, @RequestBody PersonRequest obj) {
         personService.updatePerson(obj, id);
         return ResponseEntity.noContent().build();
