@@ -18,30 +18,30 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/{id}", produces = {"application/json", "application/xml"})
     public ResponseEntity<PersonResponse> findById(@PathVariable String id) {
         var obj = personService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
-    @GetMapping
+    @GetMapping(produces = {"application/json", "application/xml"})
     public ResponseEntity<List<PersonResponse>> findAll() {
         return ResponseEntity.ok().body(personService.findAll());
     }
 
-    @PostMapping
+    @PostMapping(produces = {"application/json", "application/xml"}, consumes = {"application/json", "application/xml"})
     public ResponseEntity<Void> createPerson(@RequestBody PersonRequest obj, UriComponentsBuilder uriComponentsBuilder) {
         var person = personService.createPerson(obj);
         return ResponseEntity.created(uriComponentsBuilder.path("person/{id}").buildAndExpand(person.getId()).toUri()).build();
     }
 
-    @PostMapping("/v2")
+    @PostMapping(value = "/v2", produces = {"application/json", "application/xml"}, consumes = {"application/json", "application/xml"})
     public ResponseEntity<Void> createPersonV2(@RequestBody PersonRequestV2 obj, UriComponentsBuilder uriComponentsBuilder) {
         var person = personService.createPersonV2(obj);
         return ResponseEntity.created(uriComponentsBuilder.path("person/{id}").buildAndExpand(person.getId()).toUri()).build();
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}", produces = {"application/json", "application/xml"}, consumes = {"application/json", "application/xml"})
     public ResponseEntity<Void> updatePerson(@PathVariable String id, @RequestBody PersonRequest obj) {
         personService.updatePerson(obj, id);
         return ResponseEntity.noContent().build();
