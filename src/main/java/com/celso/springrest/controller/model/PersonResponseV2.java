@@ -1,12 +1,18 @@
 package com.celso.springrest.controller.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+@JsonPropertyOrder({"id","address","firstName","lastName","gender"})
 public class PersonResponseV2 {
 
     private Long id;
+    @JsonProperty("Nome")
     private String firstName;
+    @JsonProperty("Sobrenome")
     private String lastName;
+    @JsonProperty("Endereço")
     private String address;
     private String gender;
 
