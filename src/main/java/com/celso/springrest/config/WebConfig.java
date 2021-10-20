@@ -19,9 +19,17 @@ public class WebConfig implements WebMvcConfigurer {
         mediaTypes.put("json", MediaType.APPLICATION_JSON);
         mediaTypes.put("xml", MediaType.APPLICATION_XML);
 
+        /* Via QUERY PARAMETER
         configurer.favorParameter(true)
                 .parameterName("mediaType")
                 .ignoreAcceptHeader(true)
+                .useRegisteredExtensionsOnly(false)
+                .defaultContentType(MediaType.APPLICATION_JSON)
+                .mediaTypes(mediaTypes);
+
+         */
+        configurer.favorParameter(false)
+                .ignoreAcceptHeader(false)
                 .useRegisteredExtensionsOnly(false)
                 .defaultContentType(MediaType.APPLICATION_JSON)
                 .mediaTypes(mediaTypes);
