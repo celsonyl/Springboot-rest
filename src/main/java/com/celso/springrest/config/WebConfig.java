@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.LinkedHashMap;
@@ -13,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 @Configuration
-@EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
     private static final MediaType MEDIA_TYPE_YAML = MediaType.valueOf("application/x-yaml");
 
