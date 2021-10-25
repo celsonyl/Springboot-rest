@@ -19,7 +19,7 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @PostMapping
+    @PostMapping(produces = {"application/json", "application/xml"}, consumes = {"application/json", "application/xml", "application/x-yaml"})
     public ResponseEntity<Void> createBook(@RequestBody BookRequest bookRequest, UriComponentsBuilder uriComponentsBuilder) {
         var bookDomain = bookService.createBook(bookRequest);
         var uri = uriComponentsBuilder.path("/{id}").buildAndExpand(bookDomain.getId()).toUri();
@@ -27,7 +27,13 @@ public class BookController {
         return ResponseEntity.created(uri).build();
     }
 
-    @GetMapping
+    @GetMapping(value = "/{id}", produces = {"application/json", "application/xml", "application/x-yaml"})
+    public ResponseEntity<BookResponse> getBookById(@PathVariable Long id) {
+        var bookDomain = bookService.getBookById(id);
+        return ResponseEntity.ok().body(new BookMapperImpl().bookDomainToResponse(bookDomain));
+    }
+
+    @GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
     public ResponseEntity<List<BookResponse>> getAllBooks() {
         var listBooks = bookService.getAllBooks();
 
