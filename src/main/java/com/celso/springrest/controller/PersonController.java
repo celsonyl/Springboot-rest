@@ -4,12 +4,14 @@ import com.celso.springrest.controller.model.PersonRequest;
 import com.celso.springrest.controller.model.PersonRequestV2;
 import com.celso.springrest.controller.model.PersonResponse;
 import com.celso.springrest.services.PersonService;
+import com.celso.springrest.translator.PersonMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/person")
@@ -21,12 +23,15 @@ public class PersonController {
     @GetMapping(value = "/{id}", produces = {"application/json", "application/xml", "application/x-yaml"})
     public ResponseEntity<PersonResponse> findById(@PathVariable String id) {
         var obj = personService.findById(id);
-        return ResponseEntity.ok().body(obj);
+        return ResponseEntity.ok().body(new PersonMapperImpl().personDomainToResponse(obj));
     }
 
     @GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
     public ResponseEntity<List<PersonResponse>> findAll() {
-        return ResponseEntity.ok().body(personService.findAll());
+        var listPersonDomain = personService.findAll();
+        return ResponseEntity.ok().body(listPersonDomain.stream()
+                .map(new PersonMapperImpl()::personDomainToResponse)
+                .collect(Collectors.toList()));
     }
 
     @PostMapping(produces = {"application/json", "application/xml"}, consumes = {"application/json", "application/xml", "application/x-yaml"})
