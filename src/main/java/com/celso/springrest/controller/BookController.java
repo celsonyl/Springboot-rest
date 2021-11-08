@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,5 +41,11 @@ public class BookController {
         return ResponseEntity.ok().body(listBooks.stream()
                 .map(new BookMapperImpl()::bookDomainToResponse)
                 .collect(Collectors.toList()));
+    }
+
+    @PutMapping(value = "{id}", produces = {"application/json", "application/xml", "application/x-yaml"})
+    public ResponseEntity<Void> updateBook(@RequestBody @Valid BookRequest bookRequest, @PathVariable String id) {
+        bookService.updateBook(bookRequest, id);
+        return ResponseEntity.noContent().build();
     }
 }

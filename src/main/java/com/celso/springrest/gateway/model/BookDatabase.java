@@ -1,11 +1,9 @@
 package com.celso.springrest.gateway.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity(name = "books")
 public class BookDatabase implements Serializable {
@@ -14,9 +12,17 @@ public class BookDatabase implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "author", nullable = false, length = 100)
     private String author;
+
+    @Column(nullable = false, length = 100)
+    @Temporal(TemporalType.DATE)
     private Date launch_date;
+
+    @Column(nullable = false)
     private Double price;
+
+    @Column(nullable = false, length = 250)
     private String title;
 
     public BookDatabase() {
@@ -68,5 +74,18 @@ public class BookDatabase implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookDatabase that = (BookDatabase) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
