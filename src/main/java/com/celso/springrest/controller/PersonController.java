@@ -15,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @Api(value = "Person EndPoint", tags = "Person endpoint")
 @RestController
 @RequestMapping(value = "/person")
