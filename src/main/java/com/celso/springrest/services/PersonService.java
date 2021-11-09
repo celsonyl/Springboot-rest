@@ -4,7 +4,7 @@ import com.celso.springrest.controller.model.PersonRequest;
 import com.celso.springrest.controller.model.PersonRequestV2;
 import com.celso.springrest.controller.model.PersonResponseV2;
 import com.celso.springrest.domain.PersonDomain;
-import com.celso.springrest.exceptions.ObjectNotFound;
+import com.celso.springrest.exceptions.handler.ObjectNotFound;
 import com.celso.springrest.gateway.model.PersonDatabase;
 import com.celso.springrest.gateway.repository.PersonRepository;
 import com.celso.springrest.translator.PersonMapperImpl;

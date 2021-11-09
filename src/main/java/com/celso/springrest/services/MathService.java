@@ -1,6 +1,6 @@
 package com.celso.springrest.services;
 
-import com.celso.springrest.exceptions.UnsupportedMathOperationException;
+import com.celso.springrest.exceptions.handler.UnsupportedMathOperationException;
 import org.springframework.stereotype.Service;
 
 @Service

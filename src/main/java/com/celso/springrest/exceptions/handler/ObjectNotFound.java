@@ -1,4 +1,4 @@
-package com.celso.springrest.exceptions;
+package com.celso.springrest.exceptions.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

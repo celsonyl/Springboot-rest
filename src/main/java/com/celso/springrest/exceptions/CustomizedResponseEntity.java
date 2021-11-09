@@ -1,8 +1,9 @@
-package com.celso.springrest.exceptions.handler;
+package com.celso.springrest.exceptions;
 
-import com.celso.springrest.exceptions.ObjectNotFound;
+import com.celso.springrest.exceptions.handler.InvalidJwtAuthenticationException;
+import com.celso.springrest.exceptions.handler.ObjectNotFound;
+import com.celso.springrest.exceptions.handler.UnsupportedMathOperationException;
 import com.celso.springrest.exceptions.model.ExceptionsResponse;
-import com.celso.springrest.exceptions.UnsupportedMathOperationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -31,6 +32,12 @@ public class CustomizedResponseEntity extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ObjectNotFound.class)
     public final ResponseEntity<ExceptionsResponse> objectNotFound(Exception ex, WebRequest request) {
+        ExceptionsResponse exceptionsResponse = new ExceptionsResponse(new Date(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(exceptionsResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidJwtAuthenticationException.class)
+    public final ResponseEntity<ExceptionsResponse> invalidJwtAuthentication(InvalidJwtAuthenticationException ex, WebRequest request) {
         ExceptionsResponse exceptionsResponse = new ExceptionsResponse(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(exceptionsResponse, HttpStatus.NOT_FOUND);
     }

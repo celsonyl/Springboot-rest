@@ -2,7 +2,7 @@ package com.celso.springrest.services;
 
 import com.celso.springrest.controller.model.BookRequest;
 import com.celso.springrest.domain.BookDomain;
-import com.celso.springrest.exceptions.ObjectNotFound;
+import com.celso.springrest.exceptions.handler.ObjectNotFound;
 import com.celso.springrest.gateway.model.BookDatabase;
 import com.celso.springrest.gateway.repository.BookRepository;
 import com.celso.springrest.translator.BookMapperImpl;
