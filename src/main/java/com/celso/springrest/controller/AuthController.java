@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping(value = "/auth")
 public class AuthController {
@@ -19,8 +21,8 @@ public class AuthController {
 
     @ApiOperation(value = "Authenticate user")
     @PostMapping(value = "/signing", produces = {"application/json", "application/xml"}, consumes = {"application/json", "application/xml", "application/x-yaml"})
-    public ResponseEntity<Void> authenticate(@RequestBody AccountCredentials accountCredentials) {
+    public ResponseEntity<Map<Object, Object>> authenticate(@RequestBody AccountCredentials accountCredentials) {
         var authenticate = authenticateService.authenticate(accountCredentials);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(authenticate);
     }
 }

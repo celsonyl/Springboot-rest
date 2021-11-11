@@ -124,6 +124,7 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
+                <version>8.0.4</version>
                 <configuration>
                     <url>jdbc:mysql://localhost:3306/rest_with_spring_boot</url>
                     <user>root</user>

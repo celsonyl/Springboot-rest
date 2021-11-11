@@ -46,7 +46,7 @@ public class AuthenticateService {
 
             return model;
         } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalide username or password");
+            throw new BadCredentialsException(e.getMessage());
         }
     }
 }

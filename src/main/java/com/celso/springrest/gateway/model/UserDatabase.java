@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-@Entity(name = "user")
+@Entity(name = "users")
 public class UserDatabase implements UserDetails, Serializable {
 
     @Id
@@ -19,11 +19,11 @@ public class UserDatabase implements UserDetails, Serializable {
 
     @Column(unique = true)
     private String username;
-    private String fullname;
+    private String full_name;
     private String password;
-    private boolean accountNonExpired;
-    private boolean accountNonLocked;
-    private boolean credentialsNonExpired;
+    private boolean account_non_expired;
+    private boolean account_non_locked;
+    private boolean credentials_non_expired;
     private boolean enabled;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -59,17 +59,17 @@ public class UserDatabase implements UserDetails, Serializable {
 
     @Override
     public boolean isAccountNonExpired() {
-        return this.accountNonExpired;
+        return this.account_non_expired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return this.accountNonLocked;
+        return this.account_non_locked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return this.credentialsNonExpired;
+        return this.credentials_non_expired;
     }
 
     @Override
@@ -89,28 +89,28 @@ public class UserDatabase implements UserDetails, Serializable {
         this.username = username;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getFull_name() {
+        return full_name;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        this.accountNonExpired = accountNonExpired;
+    public void setAccount_non_expired(boolean account_non_expired) {
+        this.account_non_expired = account_non_expired;
     }
 
-    public void setAccountNonLocked(boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
+    public void setAccount_non_locked(boolean account_non_locked) {
+        this.account_non_locked = account_non_locked;
     }
 
-    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
+    public void setCredentials_non_expired(boolean credentials_non_expired) {
+        this.credentials_non_expired = credentials_non_expired;
     }
 
     public void setEnabled(boolean enabled) {
@@ -130,11 +130,11 @@ public class UserDatabase implements UserDetails, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserDatabase that = (UserDatabase) o;
-        return accountNonExpired == that.accountNonExpired && accountNonLocked == that.accountNonLocked && credentialsNonExpired == that.credentialsNonExpired && enabled == that.enabled && Objects.equals(id, that.id) && Objects.equals(username, that.username) && Objects.equals(fullname, that.fullname) && Objects.equals(password, that.password) && Objects.equals(permissions, that.permissions);
+        return account_non_expired == that.account_non_expired && account_non_locked == that.account_non_locked && credentials_non_expired == that.credentials_non_expired && enabled == that.enabled && Objects.equals(id, that.id) && Objects.equals(username, that.username) && Objects.equals(full_name, that.full_name) && Objects.equals(password, that.password) && Objects.equals(permissions, that.permissions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, fullname, password, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled, permissions);
+        return Objects.hash(id, username, password, account_non_expired, account_non_locked, credentials_non_expired, enabled, permissions);
     }
 }
