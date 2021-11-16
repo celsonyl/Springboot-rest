@@ -8,6 +8,8 @@ import com.celso.springrest.translator.PersonMapperImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -33,8 +35,11 @@ public class PersonController {
 
     @ApiOperation(value = "Get all persons")
     @GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
-    public ResponseEntity<List<PersonResponse>> findAll() {
-        var listPersonDomain = personService.findAll();
+    public ResponseEntity<List<PersonResponse>> findAll(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "limit", defaultValue = "12") int limit) {
+        Pageable pageable = PageRequest.of(page, limit);
+        var listPersonDomain = personService.findAll(pageable);
         return ResponseEntity.ok().body(listPersonDomain.stream()
                 .map(new PersonMapperImpl()::personDomainToResponse)
                 .collect(Collectors.toList()));

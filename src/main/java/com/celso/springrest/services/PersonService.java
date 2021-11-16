@@ -9,6 +9,7 @@ import com.celso.springrest.gateway.model.PersonDatabase;
 import com.celso.springrest.gateway.repository.PersonRepository;
 import com.celso.springrest.translator.PersonMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,8 +30,8 @@ public class PersonService {
         return new PersonMapperImpl().personDatabaseToDomain(obj.get());
     }
 
-    public List<PersonDomain> findAll() {
-        var listPerson = personRepository.findAll();
+    public List<PersonDomain> findAll(Pageable pageable) {
+        var listPerson = personRepository.findAll(pageable).getContent();
 
         return listPerson.stream()
                 .map(new PersonMapperImpl()::personDatabaseToDomain)
