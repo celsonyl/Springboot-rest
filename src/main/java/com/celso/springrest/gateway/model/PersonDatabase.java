@@ -20,17 +20,19 @@ public class PersonDatabase implements Serializable {
     private String address;
     private String gender;
     private Date birthDay;
+    private Boolean enabled;
 
     public PersonDatabase() {
     }
 
-    public PersonDatabase(Long id, String firstName, String lastName, String address, String gender, Date birthDay) {
+    public PersonDatabase(Long id, String firstName, String lastName, String address, String gender, Date birthDay, Boolean enabled) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.gender = gender;
         this.birthDay = birthDay;
+        this.enabled = enabled;
     }
 
     public Long getId() {
@@ -77,6 +79,14 @@ public class PersonDatabase implements Serializable {
         return birthDay;
     }
 
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public void setBirthDay(Date birthDay) {
         this.birthDay = birthDay;
     }
@@ -86,11 +96,11 @@ public class PersonDatabase implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PersonDatabase that = (PersonDatabase) o;
-        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(address, that.address) && Objects.equals(gender, that.gender);
+        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(address, that.address) && Objects.equals(gender, that.gender) && Objects.equals(birthDay, that.birthDay) && Objects.equals(enabled, that.enabled);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, address, gender);
+        return Objects.hash(id, firstName, lastName, address, gender, birthDay, enabled);
     }
 }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"id","address","firstName","lastName","gender"})
+@JsonPropertyOrder({"id", "address", "firstName", "lastName", "gender", "enabled"})
 public class PersonResponseV2 {
 
     private Long id;

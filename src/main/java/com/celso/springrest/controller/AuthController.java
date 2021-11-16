@@ -2,6 +2,7 @@ package com.celso.springrest.controller;
 
 import com.celso.springrest.security.AccountCredentials;
 import com.celso.springrest.services.AuthenticateService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+@Api(tags = "AuthenticationEndpoint")
 @RestController
 @RequestMapping(value = "/auth")
 public class AuthController {

@@ -10,6 +10,7 @@ import com.celso.springrest.gateway.repository.PersonRepository;
 import com.celso.springrest.translator.PersonMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,6 +38,7 @@ public class PersonService {
     }
 
     public PersonDomain createPerson(PersonRequest obj) {
+        obj.setEnabled(true);
         var personDomain = new PersonMapperImpl().personRequestToDomain(obj);
         var personSaved = personRepository.save(new PersonMapperImpl().personDomainToDatabase(personDomain));
 
@@ -44,6 +46,7 @@ public class PersonService {
     }
 
     public PersonResponseV2 createPersonV2(PersonRequestV2 obj) {
+        obj.setEnabled(true);
         var personSaved = personRepository.save(new PersonMapperImpl().personRequestV2ToDatabase(obj));
         return new PersonMapperImpl().personDatabaseToResponseV2(personSaved);
     }
@@ -57,6 +60,13 @@ public class PersonService {
     public void deletePerson(String id) {
         var person = findById(id);
         personRepository.deleteById(new PersonMapperImpl().personDomainToDatabase(person).getId());
+    }
+
+    @Transactional
+    public void disablePerson(Long id) {
+        var obj = personRepository.findById(id);
+        obj.ifPresent(personDatabase -> personRepository.disablePerson(personDatabase.getId()));
+        new PersonMapperImpl().personDatabaseToDomain(obj.get());
     }
 
     private void updatePerson(PersonDatabase person, PersonDatabase obj) {

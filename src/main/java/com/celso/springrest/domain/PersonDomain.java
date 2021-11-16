@@ -11,17 +11,19 @@ public class PersonDomain implements Serializable {
     private String address;
     private String gender;
     private Date birthDay;
+    private Boolean enabled;
 
     public PersonDomain() {
     }
 
-    public PersonDomain(Long id, String firstName, String lastName, String address, String gender, Date birthDay) {
+    public PersonDomain(Long id, String firstName, String lastName, String address, String gender, Date birthDay, Boolean enabled) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.gender = gender;
         this.birthDay = birthDay;
+        this.enabled = enabled;
     }
 
     public Long getId() {
@@ -70,5 +72,13 @@ public class PersonDomain implements Serializable {
 
     public void setBirthDay(Date birthDay) {
         this.birthDay = birthDay;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

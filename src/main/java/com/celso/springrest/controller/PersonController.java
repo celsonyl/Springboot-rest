@@ -61,10 +61,17 @@ public class PersonController {
         return ResponseEntity.noContent().build();
     }
 
-    @ApiOperation(value = "Dele person by id")
+    @ApiOperation(value = "Delete person by id")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deletePerson(@PathVariable String id) {
         personService.deletePerson(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @ApiOperation(value = "Disable person by id")
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<Void> disablePerson(@PathVariable Long id) {
+        personService.disablePerson(id);
         return ResponseEntity.noContent().build();
     }
 }

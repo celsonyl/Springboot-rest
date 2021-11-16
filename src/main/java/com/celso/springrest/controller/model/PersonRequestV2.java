@@ -14,16 +14,18 @@ public class PersonRequestV2 implements Serializable {
 
     @JsonFormat(pattern = "dd/MM/yyyy", timezone = "GMT-3")
     private Date birthDay;
+    private Boolean enabled;
 
     public PersonRequestV2() {
     }
 
-    public PersonRequestV2(String firstName, String lastName, String address, String gender, Date birthDay) {
+    public PersonRequestV2(String firstName, String lastName, String address, String gender, Date birthDay, Boolean enabled) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.gender = gender;
         this.birthDay = birthDay;
+        this.enabled = enabled;
     }
 
     public String getFirstName() {
@@ -64,5 +66,13 @@ public class PersonRequestV2 implements Serializable {
 
     public void setBirthDay(Date birthDay) {
         this.birthDay = birthDay;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

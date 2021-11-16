@@ -10,9 +10,8 @@ import org.mapstruct.Mapper;
 
 @Mapper
 public interface PersonMapper {
-
     PersonDatabase personRequestToDatabase(PersonRequest personRequest);
-    
+
     PersonDatabase personRequestV2ToDatabase(PersonRequestV2 personRequestV2);
 
     PersonResponseV2 personDatabaseToResponseV2(PersonDatabase personDatabase);
