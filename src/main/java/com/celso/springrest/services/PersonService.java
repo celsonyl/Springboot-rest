@@ -34,6 +34,12 @@ public class PersonService {
         return listPerson.map(this::convertPersonDomain);
     }
 
+    public Page<PersonDomain> findPersonByName(String firstName, Pageable pageable) {
+        var listPerson = personRepository.findPersonDatabaseByFirstName(firstName, pageable);
+
+        return listPerson.map(this::convertPersonDomain);
+    }
+
     private PersonDomain convertPersonDomain(PersonDatabase personDatabase) {
         return new PersonMapperImpl().personDatabaseToDomain(personDatabase);
     }

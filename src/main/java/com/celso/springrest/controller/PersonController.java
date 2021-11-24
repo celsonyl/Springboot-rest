@@ -46,6 +46,21 @@ public class PersonController {
         return ResponseEntity.ok(listPersonResponse);
     }
 
+    @ApiOperation(value = "Get all persons by name")
+    @GetMapping(value = "/findPersonByName/{firstName}", produces = {"application/json", "application/xml", "application/x-yaml"})
+    public ResponseEntity<Page<PersonResponse>> findAllPersonByName(
+            @PathVariable(value = "firstName") String firstName,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "limit", defaultValue = "12") int limit,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+        var sortDirection = "DESC".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
+
+        Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "firstName"));
+        var listPersonDomain = personService.findPersonByName(firstName, pageable);
+        var listPersonResponse = listPersonDomain.map(new PersonMapperImpl()::personDomainToResponse);
+        return ResponseEntity.ok(listPersonResponse);
+    }
+
     @ApiOperation(value = "Create Person")
     @PostMapping(produces = {"application/json", "application/xml"}, consumes = {"application/json", "application/xml", "application/x-yaml"})
     public ResponseEntity<Void> createPerson(@RequestBody PersonRequest obj, UriComponentsBuilder uriComponentsBuilder) {
