@@ -51,7 +51,25 @@ public class BookController {
         var sortDirection = "DESC".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
 
         Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "author"));
+
         var listBooks = bookService.getAllBooks(pageable);
+        var listBooksResponse = listBooks.map(new BookMapperImpl()::bookDomainToResponse);
+
+        return ResponseEntity.ok(listBooksResponse);
+    }
+
+    @ApiOperation(value = "Get all books by Author name")
+    @GetMapping(value = "/authorName/{author}", produces = {"application/json", "application/xml", "application/x-yaml"})
+    public ResponseEntity<Page<BookResponse>> getAllBooksByAuthorName(
+            @PathVariable(value = "author") String author,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "limit", defaultValue = "12") int limit,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+        var sortDirection = "DESC".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
+
+        Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "author"));
+
+        var listBooks = bookService.getAllBooksByAuthorName(author, pageable);
         var listBooksResponse = listBooks.map(new BookMapperImpl()::bookDomainToResponse);
 
         return ResponseEntity.ok(listBooksResponse);

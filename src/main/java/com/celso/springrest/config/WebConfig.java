@@ -44,6 +44,7 @@ public class WebConfig implements WebMvcConfigurer {
         converters.add(new yamlJacksonToHttpMessage());
     }
 
+    @Override
     public void addCorsMappings(CorsRegistry corsRegistry) {
         corsRegistry.addMapping("/**")
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");

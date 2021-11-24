@@ -41,6 +41,7 @@ public class PersonController {
         var sortDirection = "DESC".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
 
         Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "firstName"));
+
         var listPersonDomain = personService.findAll(pageable);
         var listPersonResponse = listPersonDomain.map(new PersonMapperImpl()::personDomainToResponse);
         return ResponseEntity.ok(listPersonResponse);
@@ -56,6 +57,7 @@ public class PersonController {
         var sortDirection = "DESC".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
 
         Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "firstName"));
+
         var listPersonDomain = personService.findPersonByName(firstName, pageable);
         var listPersonResponse = listPersonDomain.map(new PersonMapperImpl()::personDomainToResponse);
         return ResponseEntity.ok(listPersonResponse);

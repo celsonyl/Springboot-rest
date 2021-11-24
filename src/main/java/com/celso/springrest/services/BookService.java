@@ -39,6 +39,12 @@ public class BookService {
         return listBookDatabase.map(this::convertToPageBookDomain);
     }
 
+    public Page<BookDomain> getAllBooksByAuthorName(String author, Pageable pageable) {
+        var listBookDatabase = bookRepository.findBookDatabaseByAuthor(author, pageable);
+
+        return listBookDatabase.map(this::convertToPageBookDomain);
+    }
+
     private BookDomain convertToPageBookDomain(BookDatabase bookDatabase) {
         return new BookMapperImpl().bookDatabaseToDomain(bookDatabase);
     }
