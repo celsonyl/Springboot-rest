@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -37,8 +38,11 @@ public class PersonController {
     @GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
     public ResponseEntity<List<PersonResponse>> findAll(
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "limit", defaultValue = "12") int limit) {
-        Pageable pageable = PageRequest.of(page, limit);
+            @RequestParam(value = "limit", defaultValue = "12") int limit,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+        var sortDirection = "DESC".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
+
+        Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "firstName"));
         var listPersonDomain = personService.findAll(pageable);
         return ResponseEntity.ok().body(listPersonDomain.stream()
                 .map(new PersonMapperImpl()::personDomainToResponse)
