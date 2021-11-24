@@ -7,10 +7,9 @@ import com.celso.springrest.gateway.model.BookDatabase;
 import com.celso.springrest.gateway.repository.BookRepository;
 import com.celso.springrest.translator.BookMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -34,12 +33,14 @@ public class BookService {
         return new BookMapperImpl().bookDatabaseToDomain(bookDatabase.get());
     }
 
-    public List<BookDomain> getAllBooks() {
-        var listBookDatabase = bookRepository.findAll();
+    public Page<BookDomain> getAllBooks(Pageable pageable) {
+        var listBookDatabase = bookRepository.findAll(pageable);
 
-        return listBookDatabase.stream()
-                .map(new BookMapperImpl()::bookDatabaseToDomain)
-                .collect(Collectors.toList());
+        return listBookDatabase.map(this::convertToPageBookDomain);
+    }
+
+    private BookDomain convertToPageBookDomain(BookDatabase bookDatabase) {
+        return new BookMapperImpl().bookDatabaseToDomain(bookDatabase);
     }
 
     public void updateBook(BookRequest bookRequest, String id) {
