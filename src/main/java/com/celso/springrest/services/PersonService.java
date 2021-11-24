@@ -9,12 +9,10 @@ import com.celso.springrest.gateway.model.PersonDatabase;
 import com.celso.springrest.gateway.repository.PersonRepository;
 import com.celso.springrest.translator.PersonMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PersonService {
@@ -30,12 +28,14 @@ public class PersonService {
         return new PersonMapperImpl().personDatabaseToDomain(obj.get());
     }
 
-    public List<PersonDomain> findAll(Pageable pageable) {
-        var listPerson = personRepository.findAll(pageable).getContent();
+    public Page<PersonDomain> findAll(Pageable pageable) {
+        var listPerson = personRepository.findAll(pageable);
 
-        return listPerson.stream()
-                .map(new PersonMapperImpl()::personDatabaseToDomain)
-                .collect(Collectors.toList());
+        return listPerson.map(this::convertPersonDomain);
+    }
+
+    private PersonDomain convertPersonDomain(PersonDatabase personDatabase) {
+        return new PersonMapperImpl().personDatabaseToDomain(personDatabase);
     }
 
     public PersonDomain createPerson(PersonRequest obj) {
