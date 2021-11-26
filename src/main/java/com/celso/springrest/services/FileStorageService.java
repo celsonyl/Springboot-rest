@@ -1,6 +1,7 @@
 package com.celso.springrest.services;
 
 import com.celso.springrest.config.FileStorageConfig;
+import com.celso.springrest.domain.UploadFileDomain;
 import com.celso.springrest.exceptions.handler.FileStorageException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.Objects;
 public class FileStorageService {
 
     private final Path fileStorageLocation;
+    private final static UploadFileDomain uploadFileDomain = new UploadFileDomain();
 
     @Autowired
     public FileStorageService(FileStorageConfig fileStorageConfig) {
@@ -30,7 +32,7 @@ public class FileStorageService {
         }
     }
 
-    public String storageFile(MultipartFile multipartFile) {
+    public UploadFileDomain storageFile(MultipartFile multipartFile) {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
 
         try {
@@ -41,9 +43,16 @@ public class FileStorageService {
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(multipartFile.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            return fileName;
+            populateUploadFileDomain(multipartFile, fileName);
+            return uploadFileDomain;
         } catch (Exception ex) {
             throw new FileStorageException("Could not store file " + fileName + ". Please try again", ex);
         }
+    }
+
+    private void populateUploadFileDomain(MultipartFile multipartFile, String filename) {
+        uploadFileDomain.setFileName(filename);
+        uploadFileDomain.setSize(multipartFile.getSize());
+        uploadFileDomain.setFileType(multipartFile.getContentType());
     }
 }
