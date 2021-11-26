@@ -5,6 +5,7 @@ import com.celso.springrest.services.FileStorageService;
 import com.celso.springrest.translator.UploadFileMapperImpl;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Api(tags = "FileEndpoint")
 @RestController
@@ -32,5 +36,14 @@ public class FileController {
         fileDomain.setFileDownloadUri(uri);
 
         return ResponseEntity.created(URI.create(uri)).body(fileMapper.uploadFileDomainToResponse(fileDomain));
+    }
+
+    @PostMapping("/uploadFiles")
+    public ResponseEntity<List<UploadFileResponse>> uploadFiles(@RequestParam("files") MultipartFile[] multipartFiles) {
+        var uploadFile = Arrays.stream(multipartFiles).map(this::uploadFile).collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(uploadFile.stream()
+                .map(HttpEntity::getBody)
+                .collect(Collectors.toList()));
     }
 }
