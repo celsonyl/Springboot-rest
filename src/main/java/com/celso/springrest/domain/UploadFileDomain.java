@@ -1,7 +1,6 @@
 package com.celso.springrest.domain;
 
 import java.io.Serializable;
-import java.net.URL;
 
 public class UploadFileDomain implements Serializable {
 
