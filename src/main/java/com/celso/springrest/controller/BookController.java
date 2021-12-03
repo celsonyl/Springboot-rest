@@ -17,7 +17,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 
-@CrossOrigin
 @Api(value = "Book EndPoint", tags = "Book endpoint")
 @RestController
 @RequestMapping(value = "/book")
@@ -28,6 +27,7 @@ public class BookController {
 
     @ApiOperation(value = "Create book")
     @PostMapping(produces = {"application/json", "application/xml"}, consumes = {"application/json", "application/xml", "application/x-yaml"})
+    @CrossOrigin
     public ResponseEntity<Void> createBook(@RequestBody BookRequest bookRequest, UriComponentsBuilder uriComponentsBuilder) {
         var bookDomain = bookService.createBook(bookRequest);
         var uri = uriComponentsBuilder.path("/{id}").buildAndExpand(bookDomain.getId()).toUri();
