@@ -35,8 +35,8 @@ public class PersonController {
     @ApiOperation(value = "Get all persons")
     @GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
     public ResponseEntity<Page<PersonResponse>> findAll(
-            @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "limit", defaultValue = "12") int limit,
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "limit", defaultValue = "12") Integer limit,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
         var sortDirection = "DESC".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
 
@@ -51,8 +51,8 @@ public class PersonController {
     @GetMapping(value = "/findPersonByName/{firstName}", produces = {"application/json", "application/xml", "application/x-yaml"})
     public ResponseEntity<Page<PersonResponse>> findAllPersonByName(
             @PathVariable(value = "firstName") String firstName,
-            @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "limit", defaultValue = "12") int limit,
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "limit", defaultValue = "12") Integer limit,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
         var sortDirection = "DESC".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
 
