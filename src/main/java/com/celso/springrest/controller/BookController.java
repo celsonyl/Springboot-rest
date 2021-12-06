@@ -44,8 +44,9 @@ public class BookController {
 
     @ApiOperation(value = "Get all books")
     @GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
+    @CrossOrigin
     public ResponseEntity<Page<BookResponse>> getAllBooks(
-            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "limit", defaultValue = "12") int limit,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
         var sortDirection = "DESC".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
@@ -62,7 +63,7 @@ public class BookController {
     @GetMapping(value = "/authorName/{author}", produces = {"application/json", "application/xml", "application/x-yaml"})
     public ResponseEntity<Page<BookResponse>> getAllBooksByAuthorName(
             @PathVariable(value = "author") String author,
-            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "limit", defaultValue = "12") int limit,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
         var sortDirection = "DESC".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
