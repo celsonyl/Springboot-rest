@@ -62,4 +62,9 @@ public class BookService {
         bookDatabase.setTitle(bookDomain.getTitle());
         bookRepository.save(bookDatabase);
     }
+
+    public void deleteBook(Long id) {
+        var bookDeleted = this.getBookById(id);
+        bookRepository.deleteById(new BookMapperImpl().bookDomainToDatabase(bookDeleted).getId());
+    }
 }

@@ -30,7 +30,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .useRegisteredExtensionsOnly(false)
                 .defaultContentType(MediaType.APPLICATION_JSON)
                 .mediaTypes(mediaTypes);
-
          */
         configurer.favorParameter(false)
                 .ignoreAcceptHeader(false)
