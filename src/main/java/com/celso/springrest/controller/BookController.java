@@ -53,7 +53,7 @@ public class BookController {
             @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
         var sortDirection = "DESC".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
 
-        Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "author"));
+        Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection,"author"));
 
         var listBooks = bookService.getAllBooks(pageable);
         var listBooksResponse = listBooks.map(new BookMapperImpl()::bookDomainToResponse);
