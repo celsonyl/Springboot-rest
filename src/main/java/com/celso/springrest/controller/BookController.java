@@ -20,6 +20,7 @@ import javax.validation.Valid;
 @Api(value = "Book EndPoint", tags = "Book endpoint")
 @RestController
 @RequestMapping(value = "/book")
+@CrossOrigin
 public class BookController {
 
     @Autowired
@@ -37,6 +38,7 @@ public class BookController {
 
     @ApiOperation(value = "Get Book by id")
     @GetMapping(value = "/{id}", produces = {"application/json", "application/xml", "application/x-yaml"})
+    @CrossOrigin
     public ResponseEntity<BookResponse> getBookById(@PathVariable Long id) {
         var bookDomain = bookService.getBookById(id);
         return ResponseEntity.ok().body(new BookMapperImpl().bookDomainToResponse(bookDomain));
